@@ -1,6 +1,6 @@
 #include <stdio.h>
 // the main function
-int main(void)
+int main()
 {
 	/* calling " printf " function
 	the " definition " is included in " stdio " library */
