@@ -6,4 +6,3 @@ int main()
 	the " definition " is included in " stdio " library */
 	printf("Hello, McMaster!\n");
 }
-
