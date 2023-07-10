@@ -17,10 +17,11 @@
                 "-Wshadow",
                 "-Wpedantic",
                 "-std=c17",
+                "-lm",
                 "-D__USE_MINGW_ANSI_STDIO=1"
             ],
             "options": {
-                "cwd": "${workspaceFolder}"//"${fileDirname}"
+                "cwd": "${workspaceFolder}" //"${fileDirname}"
             },
             "problemMatcher": [
                 "$gcc"
