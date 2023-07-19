@@ -40,10 +40,8 @@ void check_input(bool *flag, char *amount, long double *balance)
         strcpy(copy_balance, amount);
         char *parts;                       // token which will hold the split string
         parts = strtok(copy_balance, "."); // split string at decimal point and take first value
-        printf("%s\n", parts);
-        parts = strtok(NULL, "."); // take second value (part after decimal point) and split string at decimal point
-        printf("%s\n", parts);
-        if (strlen(parts) > 2) // if value after decimal point is more than 2 characters, it has too many decimal places
+        parts = strtok(NULL, ".");         // take second value (part after decimal point) and split string at decimal point
+        if (strlen(parts) > 2)             // if value after decimal point is more than 2 characters, it has too many decimal places
         {
             *flag += true;
             printf("Error: you put too many numbers after the decimal point. Try again\n");
@@ -122,6 +120,11 @@ int main()
         printf("Please type the number of accounts you'd like to have   ");
         scanf("%s", &number_of_accounts_input[0]);
         mini_check_characters(&flag, number_of_accounts_input, &number_of_accounts);
+        if (number_of_accounts == 0 || number_of_accounts > 10) // check to make sure the number of accounts isn't 0 or more than the maximum (10)
+        {
+            flag += true;
+            printf("Invalid number of accounts. Try again\n");
+        }
     } while (flag);
     char balance_input[100] = {'\0'};            // where the initial balance input will be stored as a string
     long double balance = 0.0;                   // where the initial balance input will be stored as a number
@@ -177,6 +180,11 @@ int main()
                 printf("Enter amount to withdraw  ");
                 scanf("%s", &withdraw_input[0]);
                 check_input(&flag, withdraw_input, &withdraw);
+                if (withdraw > accounts[current_account]) // check if the person is withdrawing more than they have in current account
+                {
+                    flag += true;
+                    printf("Error: Withdraw amount is more than amount in balance. Try again\n");
+                }
             } while (flag);
             accounts[current_account] -= withdraw; // subtract from balance of the specific account
             break;

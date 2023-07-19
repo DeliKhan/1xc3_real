@@ -1,0 +1,9 @@
+CC=gcc
+CFLAGS= -Wextra -Wall
+EXECUTABLE=pointers_1
+all: $(EXECUTABLE)
+$(EXECUTABLE):pointers_1.c
+	$(CC) $(CFLAGS) -o $(EXECUTABLE) pointers_1.c
+
+clean:
+	rm -f $(EXECUTABLE)
