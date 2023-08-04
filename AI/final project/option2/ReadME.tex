@@ -1,0 +1,128 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{ragged2e}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\setlength{\parskip}{0pt}
+ 
+\definecolor{codegray}{rgb}{0.9,0.9,0.9}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{codegray},
+    language=bash,
+    keywordstyle=\color{magenta},
+}
+\definecolor{cherry}{RGB}{148,0,25}
+
+\newtcbox{\codebox}[1][gray]{on line, boxrule=0.2pt, colback=blue!5, colframe=#1, fontupper=\color{cherry}\ttfamily, arc=2pt, boxsep=0pt, left=2pt, right=2pt, top=3pt, bottom=2pt}
+
+\begin{document}
+\begin{center}
+    {\fontsize{20}{14}\selectfont\textcolor{RoyalBlue}{\textbf{Final project AI}}} 
+    \vspace{\baselineskip}
+    
+    by: Deluckshan Murugesu
+\end{center}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+{\fontsize{15}{14}\selectfont\textcolor{BurntOrange}{\textbf{Part B Data:}}}
+
+\vspace{\baselineskip}
+\begin{table}[h!]
+    \centering
+    \caption{epochs = 100000, train split = 0.003, \textbf{Learning Rate (LR) is variable}}
+    \label{table:1}
+    \begin{tabular}{|c|c|c|c|c|}
+         \hline
+         Test & Cost Train & Cost Validation & Train Accuracy [\%] & Validation Accuracy [\%] \\ 
+         \hline
+         LR = 0.0005 & 0.483452 & 0.477952 & 60.83 & 56.98 \\
+         \hline
+         LR = 0.001 & 0.446827 & 0.458900 & 61.67 & 61.27 \\
+         \hline
+         LR = 0.005 & 0.022374 & 0.457534 & 99.17 & 72.21 \\
+         \hline
+         LR = 0.01 & 0.004225 & 0.439274 & 100.00 & 74.81 \\
+         \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \caption{Learning rate = 0.005, train split = 0.003, \textbf{epochs is variable}}
+    \label{table:2}
+    \begin{tabular}{|c|c|c|c|c|}
+         \hline
+         Test & Cost Train & Cost Validation & Train Accuracy [\%] & Validation Accuracy [\%] \\ 
+         \hline
+         epochs = 100 & 0.496459 & 0.495743 & 53.33 & 53.47 \\
+         \hline
+         epochs = 1000 & 0.483610 & 0.478131 & 60.83 & 56.85 \\
+         \hline
+         epochs = 10000 & 0.483418 & 0.477926 & 60.83 & 56.99 \\
+         \hline
+         epochs = 100000 & 0.016991 & 0.463017 & 99.17 & 72.84 \\
+         \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \caption{epochs = 100000, Learning rate = 0.005, \textbf{train split (TS) is variable}}
+    \label{table:3}
+    \begin{tabular}{|c|c|c|c|c|}
+         \hline
+         Test & Cost Train & Cost Validation & Train Accuracy [\%] & Validation Accuracy [\%] \\ 
+         \hline
+         TS = 0.0003 & 0.008447 & 0.424405 & 99.17 & 75.15 \\
+         \hline
+         TS = 0.003 & 0.037723 & 0.431672 & 97.50 & 74.24 \\
+         \hline
+         TS = 0.005 & 0.023335 & 0.455605 & 98.33 & 72.84 \\
+         \hline
+         TS = 0.01 & 0.031481 & 0.464570 & 97.50 & 72.49 \\
+         \hline
+         TS = 0.1** & 0.014851 & 0.493305 & 99.17 & 71.74 \\
+         \hline
+    \end{tabular}
+\end{table}
+**It should give a segmentation error, but my code bypasses the stack overflow through dynamic memory allocation (read Q4 for more info)
+
+
+\begin{enumerate}
+    \item In Table \ref{table:1}, the results show that increasing the learning rate decreases both the training and validation cost, with training cost decreasing at a faster rate. A loss function tells us the amount of error for a specific datapoint. A cost function tells us the average amount of error for an entire dataset. Thus, the results show that increasing the learning rate decreases the amount of errors the ANN makes in predicting the value of a given input, with the amount of errors made with the training set decreasing faster than the set the ANN hasn't seen before (I'll refer to this as the validation set from now on). The cost is linked to accuracy as the less errors the ANN makes, the more accurate it is, hence the increase in learning rate increased the accuracy of prediction of both the training set and validation set. To explain why this is happening, remember that the learning rate determines the step size used to update the weights and biases. If the step size is too small, it will take alot of iterations before it converges on the best values for the bias and weights, but is more accurate. If the step size is too large, it could jump over the best values, which also leads to loss in accuracy, but you can use less iterations. Thus you want to get the learning rate as high as possible without causing overshooting. In this case, the values do not seem to cause overshooting, thus each increase improves the accuracy within a set number of epochs.
+    \item In Table \ref{table:2}, the results show that the increase in the number of epochs decreases train \& validation cost, and thus, increases train \& validation accuracy. See above for the definition of each of the column headers. To explain why this occurs, note that epoch represents the number of forward and backward propagations that happen. Each time we do a forward and backward propagation, we refine the weights and biases of the neurons, leading them closer towards the best values for the weights and biases. Better weights and biases mean more accurate predictions, which is why there is an increase in both accuracies and a decrease in the amount of errors made in both sets. The disadvantage to using a higher number of epochs is that the code takes more time and can lead to diminishing returns for high values.
+    \item In Table \ref{table:3}, the results aren't as straightforward as we see the first row has high accuracy and low cost for both sets, but the other rows show that the higher the value, the higher the training accuracy \& the lower the training cost. However, the higher the value, the lower the validation accuracy and the higher the validation cost. Ignoring the first row, the rest makes sense as train split determines what amount of the data should be used to train the ANN and the rest is used in the validation set. As such, a higher value means more data for the ANN to train off of, which will increase the prediction capabilities of our ANN (will make it less likely to be overfitting). However, this can also be a problem because introducing more training data may introduce more outliers and noise, which can affect its predicting ability for new inputs (hence lower validation accuracy).
+    \item In Table \ref{table:3}, you'll notice that the last row should be error due to segmentation error. However, I bypassed this, which is why I have results. Let me explain what should have happened. What should have happened is that when we get to the following line where we define
+    \codebox{double a3\_squared\_complement[num\_neurons\_layer3][num\_train];}, we get a segmentation error. The reason is due to stack overflow. The stack can only hold a small amount of data (about 8MB), so when we deal with large amounts of data and store them, we quickly use up the space in stack, and in this case, when we tried allocating space for
+    \codebox{double a3\_squared\_complement[num\_neurons\_layer3][num\_train];}, it exceeds the stack and returns that error. Now, I optimized my code by having the variable \codebox{data}, be a heap and then free it near the end of the function \codebox{parse\_file}. Since \codebox{data} holds all the data from the text file and we don't use it after we have stored it in a few other variables, I thought it would be best to store it as a heap instead of stack. Because I did this, my code is able to run when TS = 0.1.
+\end{enumerate}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+{\fontsize{15}{14}\selectfont\textcolor{BurntOrange}{\textbf{Part D:}}}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+This is a difficult question. Both have their advantages and disadvantages for making ANN models. Starting with Python, it is much faster for you to \textbf{code} the model as you are not building it from scratch, but from the \codebox{tensorflow} library. It can also be easier to comprehend as it uses fewer lines of code and thus, can have better readability. The disadvantages are that runtime is much slower than C, even for the same model. This is the price of coding with the help of a library, paired with a high-level coding language. Furthermore, it could potentially use up more resources compared to a more effectively used C code, because coding from scratch allows you more control over how you use your resources. 
+
+For C, the advantage is as mentioned above, speed and potentially low-resource usage. The disadvantage, also mentioned above, is more time to code and potentially worse readability.
+
+So the verdict? I believe that if you are making a simple ANN model which has acceptable runtime in python, then stick with python. If you are making a complex ANN model (and possibly for a company) with several hidden layers and neurons, then use C.
+
+\setlength{\parindent}{0pt} % Adjust the value for starting paragraph
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+{\fontsize{15}{14}\selectfont\textcolor{BurntOrange}{\textbf{How to Compile \& Execute:}}}
+\vspace{\baselineskip}
+\lstset{style=mystyle}
+\begin{lstlisting}
+make clean
+make
+./main
+\end{lstlisting}
+\end{document}
