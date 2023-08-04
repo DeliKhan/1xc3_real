@@ -7,5 +7,6 @@ int main()
     {
         printf("arr [%d] = %d with address %p\n", i, arr[i], (arr + i)); //&arr[i]); Both mean the same thing
         // so &p and p both give memory addresses if p is a pointer
+        // NOOOO. &p is different memory address then p, where p is a pointer
     }
 }

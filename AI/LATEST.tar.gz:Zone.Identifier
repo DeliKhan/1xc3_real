@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://download.libsodium.org/libsodium/releases/
+HostUrl=https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
